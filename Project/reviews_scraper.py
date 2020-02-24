@@ -7,18 +7,27 @@
 import urllib.request
 from bs4 import BeautifulSoup
 from datetime import datetime
+import pandas as pd 
 import json
 import re
 
 urls = [
     "https://www.yelp.com/biz/guzman-y-gomez-singapore-5",
     "https://www.yelp.com/biz/soup-nutsy-toronto?page_src=related_bizes",
-    "https://www.yelp.com/biz/chilis-niagara-falls-2?osq=Chillis"
+    "https://www.yelp.com/biz/chilis-niagara-falls-2?osq=Chillis",
+    "https://www.yelp.com/biz/hoshino-coffee-singapore?page_src=related_bizes",
+    "https://www.yelp.com/biz/jimmy-monkey-cafe-and-bar-singapore?page_src=related_bizes", 
+    "https://www.yelp.com/biz/the-beast-singapore",
+    "https://www.yelp.com/biz/loof-singapore",
+    "https://www.yelp.com/biz/working-title-singapore-2"
+    ""
     ]
 
-restaurants = dict()
+# restaurants = dict()
+# reviews = dict()
+reviews = pd. DataFrame(columns=['restaurant_name', 'content', 'stars', 'date'])
 
-file_delete = open('reviews.txt', 'w') 
+file_delete = open('reviews.json', 'w') 
 file_delete.close()
 
 for url in urls: 
@@ -50,15 +59,17 @@ for url in urls:
                 reviews_date_datetime.append(datetime.strptime(div.getText(), '%m/%d/%Y'))
 
     i = 0
-    reviews = dict()
+    # reviews = dict()
     while i < len(reviews_content):
         dictionary = dict()
+        dictionary["restaurant_name"] = restaurant_name
         dictionary["content"] = reviews_content[i]
         dictionary["stars"] = int(re.sub("[^0-9]", "", reviews_stars[i+1]))
         dictionary["date"] = reviews_date_datetime[i].isoformat()
-        reviews[i] = dictionary
+        reviews = reviews.append(dictionary, ignore_index=True)
         i += 1
-    restaurants[restaurant_name] = reviews
+    # restaurants[restaurant_name] = reviews
 
-with open('reviews.txt', 'a') as file:
-    file.write(json.dumps(restaurants)) 
+# with open('reviews.txt', 'a') as file:
+#     file.write(json.dumps(dictionary)) 
+reviews.to_json(r'C:/Users/seagate pc/Desktop/BT4222/Group Project/Data_Mining/Project/reviews.json')
