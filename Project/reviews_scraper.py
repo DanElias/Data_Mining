@@ -19,8 +19,24 @@ urls = [
     "https://www.yelp.com/biz/jimmy-monkey-cafe-and-bar-singapore?page_src=related_bizes", 
     "https://www.yelp.com/biz/the-beast-singapore",
     "https://www.yelp.com/biz/loof-singapore",
-    "https://www.yelp.com/biz/working-title-singapore-2"
-    ""
+    "https://www.yelp.com/biz/working-title-singapore-2",
+    "https://www.yelp.com/biz/jumbo-seafood-singapore-4",
+    "https://www.yelp.com/biz/tian-tian-hainanese-chicken-rice-singapore-7",
+    "https://www.yelp.com/biz/song-fa-bak-kut-teh-singapore-11",
+    "https://www.yelp.com/biz/liao-fan-hawker-chan-singapore-3",
+    "https://www.yelp.com/biz/din-tai-fung-singapore-5",
+    "https://www.yelp.com/biz/swee-choon-tim-sum-singapore",
+    "https://www.yelp.com/biz/salt-grill-and-sky-bar-singapore",
+    "https://www.yelp.com/biz/the-naked-finn-singapore",
+    "https://www.yelp.com/biz/zhong-guo-la-mian-xiao-long-bao-singapore",
+    "https://www.yelp.com/biz/tim-ho-wan-singapore-7",
+    "https://www.yelp.com/biz/edge-singapore",
+    "https://www.yelp.com/biz/vatos-urban-tacos-singapore",
+    "https://www.yelp.com/biz/mtr-1924-singapore-2",
+    "https://www.yelp.com/biz/cut-singapore-2",
+    "https://www.yelp.com/biz/waku-ghin-singapore",
+    "https://www.yelp.com/biz/spago-by-wolfgang-puck-singapore", 
+    "https://www.yelp.com/biz/hokkaido-ramen-santouka-singapore"
     ]
 
 # restaurants = dict()
