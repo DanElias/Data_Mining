@@ -13,7 +13,7 @@ import pickle
 num_page = 0
 urls = list()
 
-while num_page < 1:
+while num_page < 358:
     page_url = "https://www.yelp.com/search?cflt=restaurants&find_loc=Singapore%2C+Singapore&start=" + str(num_page*30)
     urls.append(page_url)
     num_page += 1
@@ -36,11 +36,19 @@ for url in urls:
         result = href.startswith('/biz')
         result2 =  "hrid=" not in href
         if(result and result2):
-            print(count)
-            print("\n")
-            print("href: %s" % a["href"])
-            count += 1
-            restaurants_urls.append(a["href"])
+            if(count != 0):
+                if(restaurants_urls[count-1] != a["href"]):
+                    print(count)
+                    print("\n")
+                    print("href: %s" % a["href"])
+                    count += 1
+                    restaurants_urls.append(a["href"])
+            else:
+                print(count)
+                print("\n")
+                print("href: %s" % a["href"])
+                count += 1
+                restaurants_urls.append(a["href"]) 
 
 urls_file = open("urls.txt", "wb")             
 pickle.dump(restaurants_urls, urls_file)
