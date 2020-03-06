@@ -1,6 +1,5 @@
 
 '''
-    Copyright 2020 Daniel Elias Becerra
     This web scraper is only used for educational purposes
 '''
 
@@ -10,6 +9,16 @@ from datetime import datetime
 import pandas as pd 
 import json
 import re
+import pickle
+
+print("getting urls...")
+
+urls_file = open("urls.txt", "rb")
+urls = pickle.load(urls_file)
+urls_file.close
+
+
+'''
 
 urls = [
     "https://www.yelp.com/biz/guzman-y-gomez-singapore-5",
@@ -37,18 +46,18 @@ urls = [
     "https://www.yelp.com/biz/waku-ghin-singapore",
     "https://www.yelp.com/biz/spago-by-wolfgang-puck-singapore", 
     "https://www.yelp.com/biz/hokkaido-ramen-santouka-singapore"
-    ]
 
-# restaurants = dict()
-# reviews = dict()
+    ]
+'''
+
 reviews = pd. DataFrame(columns=['restaurant_name', 'content', 'stars', 'date'])
 
 file_delete = open('reviews.json', 'w') 
 file_delete.close()
 
 for url in urls: 
-
-    request = urllib.request.Request(url)
+    print("scrapping: https://www.yelp.com"+url+"...")
+    request = urllib.request.Request("https://www.yelp.com"+url)
     response = urllib.request.urlopen(request)
     html = response.read().decode('unicode_escape')
     soup = BeautifulSoup(html, "html.parser")
@@ -59,7 +68,10 @@ for url in urls:
     reviews_date_string = []
     reviews_date_datetime = []
 
-    restaurant_name = soup.find(name="h1", attrs={"class":["lemon--h1__373c0__2ZHSL"]}).getText()
+    restaurant_name_h1 = soup.find(name="h1", attrs={"class":["lemon--h1__373c0__2ZHSL"]})
+    if(restaurant_name_h1 is None):
+        continue
+    restaurant_name = restaurant_name_h1.getText()
 
     for div in soup.find_all(name="p", attrs={"class":["comment__373c0__3EKjH"]}):
         review = div.find(name="span", attrs={"class": ["lemon--span__373c0__3997G"]})
@@ -75,17 +87,14 @@ for url in urls:
                 reviews_date_datetime.append(datetime.strptime(div.getText(), '%m/%d/%Y'))
 
     i = 0
-    # reviews = dict()
     while i < len(reviews_content):
         dictionary = dict()
         dictionary["restaurant_name"] = restaurant_name
         dictionary["content"] = reviews_content[i]
-        dictionary["stars"] = int(re.sub("[^0-9]", "", reviews_stars[i+1]))
+        if(i+1 < len(reviews_stars)):
+            dictionary["stars"] = int(re.sub("[^0-9]", "", reviews_stars[i+1]))
         dictionary["date"] = reviews_date_datetime[i].isoformat()
         reviews = reviews.append(dictionary, ignore_index=True)
         i += 1
-    # restaurants[restaurant_name] = reviews
-
-# with open('reviews.txt', 'a') as file:
-#     file.write(json.dumps(dictionary)) 
-reviews.to_json(r'C:/Users/seagate pc/Desktop/BT4222/Group Project/Data_Mining/Project/reviews.json')
+    
+reviews.to_json(r'D:/Data_Mining/Project/reviews.json')
