@@ -1,0 +1,10 @@
+urllib3==1.24.3
+BeautifulSoup==4.0.9
+pickleshare==0.7.5
+jsonschema==3.2.0
+nltk==3.4
+pandas==0.24.2
+jupyter-core==4.6.2
+pickleshare==0.7.5
+requests==2.21.0
+requests-oauthlib==1.3.0
